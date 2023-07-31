@@ -67,6 +67,19 @@ POINT_CLOUD_REGISTER_POINT_STRUCT (PointPoseInfo,
                                    (int, idx, idx) (double, time, time)
                                    )
 
+struct PointXYZIRT
+{
+    PCL_ADD_POINT4D
+    PCL_ADD_INTENSITY;
+    uint16_t ring;
+    float time;
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+} EIGEN_ALIGN16;
+POINT_CLOUD_REGISTER_POINT_STRUCT (PointXYZIRT,
+    (float, x, x) (float, y, y) (float, z, z) (float, intensity, intensity)
+    (uint16_t, ring, ring) (float, time, time)
+)
+
 // PCL point types
 using pcl::PointXYZI;
 //using pcl::PointXYZINormal;

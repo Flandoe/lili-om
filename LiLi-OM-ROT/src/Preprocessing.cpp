@@ -305,47 +305,13 @@ public:
         PointType point;
         PointType point_undis;
         std::vector<pcl::PointCloud<PointType>> laserCloudScans(N_SCANS);
+        pcl::PointCloud<PointXYZIRT> lidar_cloud_in_XYZIRT;
+        pcl::fromROSMsg(current_cloud_msg, lidar_cloud_in_XYZIRT);
         for (int i = 0; i < cloudSize; i++) {
             point.x = lidar_cloud_in.points[i].x;
             point.y = lidar_cloud_in.points[i].y;
             point.z = lidar_cloud_in.points[i].z;
             point.intensity = 0.1 * lidar_cloud_in.points[i].intensity;
-
-
-            float angle = atan(point.z / sqrt(point.x * point.x + point.y * point.y)) * 180 / M_PI;
-            int scanID = 0;
-
-            if (N_SCANS == 16) {
-                scanID = int((angle + 15) / 2 + 0.5);
-                if (scanID > (N_SCANS - 1) || scanID < 0) {
-                    count--;
-                    continue;
-                }
-            }
-            else if (N_SCANS == 32) {
-                scanID = int((angle + 92.0/3.0) * 3.0 / 4.0);
-                if (scanID > (N_SCANS - 1) || scanID < 0) {
-                    count--;
-                    continue;
-                }
-            }
-            else if (N_SCANS == 64) {
-                if (angle >= -8.83)
-                    scanID = int((2 - angle) * 3.0 + 0.5);
-                else
-                    scanID = N_SCANS / 2 + int((-8.83 - angle) * 2.0 + 0.5);
-
-                // use [0 50]  > 50 remove outlies
-                if (angle > 2 || angle < -24.33 || scanID > 50 || scanID < 0) {
-                    count--;
-                    continue;
-                }
-            }
-            else {
-                printf("wrong scan number\n");
-                ROS_BREAK();
-            }
-
             float ori = -atan2(point.y, point.x);
             if (!halfPassed) {
                 if (ori < startOri - M_PI / 2)
@@ -363,13 +329,79 @@ public:
                 else if (ori > endOri + M_PI / 2)
                     ori -= 2 * M_PI;
             }
-
+            int scanID = lidar_cloud_in_XYZIRT[i].ring;
             float relTime = (ori - startOri) / (endOri - startOri);
             point.intensity = scanID + 0.1 * relTime;
 
             point_undis = undistortion(point, qIMU);
             laserCloudScans[scanID].push_back(point_undis);
         }
+        
+        // for (int i = 0; i < cloudSize; i++) {
+        //     point.x = lidar_cloud_in.points[i].x;
+        //     point.y = lidar_cloud_in.points[i].y;
+        //     point.z = lidar_cloud_in.points[i].z;
+        //     point.intensity = 0.1 * lidar_cloud_in.points[i].intensity;
+
+
+        //     float angle = atan(point.z / sqrt(point.x * point.x + point.y * point.y)) * 180 / M_PI;
+        //     int scanID = 0;
+
+        //     if (N_SCANS == 16) {
+        //         scanID = int((angle + 15) / 2 + 0.5);
+        //         if (scanID > (N_SCANS - 1) || scanID < 0) {
+        //             count--;
+        //             continue;
+        //         }
+        //     }
+        //     else if (N_SCANS == 32) {
+        //         scanID = int((angle + 92.0/3.0) * 3.0 / 4.0);
+        //         if (scanID > (N_SCANS - 1) || scanID < 0) {
+        //             count--;
+        //             continue;
+        //         }
+        //     }
+        //     else if (N_SCANS == 64) {
+        //         if (angle >= -8.83)
+        //             scanID = int((2 - angle) * 3.0 + 0.5);
+        //         else
+        //             scanID = N_SCANS / 2 + int((-8.83 - angle) * 2.0 + 0.5);
+
+        //         // use [0 50]  > 50 remove outlies
+        //         if (angle > 2 || angle < -24.33 || scanID > 50 || scanID < 0) {
+        //             count--;
+        //             continue;
+        //         }
+        //     }
+        //     else {
+        //         printf("wrong scan number\n");
+        //         ROS_BREAK();
+        //     }
+
+        //     float ori = -atan2(point.y, point.x);
+        //     if (!halfPassed) {
+        //         if (ori < startOri - M_PI / 2)
+        //             ori += 2 * M_PI;
+        //         else if (ori > startOri + M_PI * 3 / 2)
+        //             ori -= 2 * M_PI;
+
+        //         if (ori - startOri > M_PI)
+        //             halfPassed = true;
+        //     }
+        //     else {
+        //         ori += 2 * M_PI;
+        //         if (ori < endOri - M_PI * 3 / 2)
+        //             ori += 2 * M_PI;
+        //         else if (ori > endOri + M_PI / 2)
+        //             ori -= 2 * M_PI;
+        //     }
+
+        //     float relTime = (ori - startOri) / (endOri - startOri);
+        //     point.intensity = scanID + 0.1 * relTime;
+
+        //     point_undis = undistortion(point, qIMU);
+        //     laserCloudScans[scanID].push_back(point_undis);
+        // }
 
         cloudSize = count;
         // printf("points size %d \n", cloudSize);
