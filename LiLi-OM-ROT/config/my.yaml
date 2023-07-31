@@ -1,6 +1,6 @@
 common:
   frame_id: "velodyne"
-  data_set: "utbm" # "my" # 
+  data_set:  "utbm" # "my" #
   
 IMU:
   acc_n: 2000
@@ -10,7 +10,7 @@ IMU:
 
 preprocessing:
   lidar_topic: "/merged_cloud" # "/vlp_top/points_raw" # 
-  ds_rate: 2
+  ds_rate: 4
   line_num: 32
 
 lidar_odometry:
@@ -32,7 +32,7 @@ backend_fusion:
   lc_time_thres: 60.0
   surf_dist_thres: 0.12
   kd_max_radius: 1.0
-  save_pcd: false
+  save_pcd: true
 
 #extrinsic imu to lidar
   ql2b_w: 0
