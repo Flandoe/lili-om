@@ -2474,8 +2474,8 @@ public:
         }
         ds_filter_global_map.setInputCloud(global_map);
         ds_filter_global_map.filter(*global_map_ds);
-        pcl::io::savePCDFileASCII("/home/lsgi/Downloads/LILI-OM/global_map_ds.pcd", *global_map_ds);
-        pcl::io::savePCDFileASCII("/home/lsgi/Downloads/LILI-OM/global_map.pcd", *global_map);
+        pcl::io::savePCDFileASCII("/home/mic/Downloads/LILI-OM/global_map_ds.pcd", *global_map_ds);
+        pcl::io::savePCDFileASCII("/home/mic/Downloads/LILI-OM/global_map.pcd", *global_map);
         cout << "****************************************************" << endl;
         cout << "Saving map to pcd files completed" << endl;
         global_map->clear();

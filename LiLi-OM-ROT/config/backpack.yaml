@@ -32,7 +32,7 @@ backend_fusion:
   lc_time_thres: 60.0
   surf_dist_thres: 0.12
   kd_max_radius: 1.0
-  save_pcd: false
+  save_pcd: true
 
 #extrinsic imu to lidar
   ql2b_w: 0
