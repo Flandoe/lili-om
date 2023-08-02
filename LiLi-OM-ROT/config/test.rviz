@@ -4,7 +4,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /Global Options1
         - /global map1
+        - /raw scan1
       Splitter Ratio: 0.5
     Tree Height: 719
   - Class: rviz/Selection
@@ -70,7 +72,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
-      Size (Pixels): 1.5
+      Size (Pixels): 2
       Size (m): 0.009999999776482582
       Style: Points
       Topic: /laser_cloud_map
@@ -126,7 +128,7 @@ Visualization Manager:
       Position Transformer: XYZ
       Queue Size: 10
       Selectable: true
-      Size (Pixels): 1
+      Size (Pixels): 1.5
       Size (m): 0.009999999776482582
       Style: Points
       Topic: /raw_scan
@@ -162,7 +164,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 37.24596405029297
+      Distance: 170.78736877441406
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -170,17 +172,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 1.6274361610412598
-        Y: -3.452329158782959
-        Z: -3.412256956100464
+        X: -21.041545867919922
+        Y: 25.6640625
+        Z: -4.442171096801758
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 1.5297963619232178
       Target Frame: <Fixed Frame>
-      Yaw: 1.4647936820983887
+      Yaw: 1.409793734550476
     Saved: ~
 Window Geometry:
   Displays:
